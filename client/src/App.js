@@ -17,7 +17,7 @@ function App() {
     window.addEventListener('storage', () => {
       if (
         !localStorage.token ||
-        api.defaults.headers.common['x-auth-token'] !== localStorage.token
+        api.defaults.headers.common['x-access-token'] !== localStorage.token
       ) {
         store.dispatch({ type: LOGOUT });
       }
@@ -27,7 +27,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route component={Routes} />
+          <Route exact component={Routes} />
         </Switch>
       </Router>
     </Provider>

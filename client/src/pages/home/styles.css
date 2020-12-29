@@ -1,0 +1,25 @@
+.home__title,
+.home__add {
+  text-align: center;
+}
+.home__user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.home__username {
+  margin-right: 1rem;
+  margin-bottom: 0 !important;
+}
+.home__content {
+  margin-top: 2rem;
+}
+.ant-card-head-title {
+  color: #106eea;
+  font-size: 1.1rem;
+}
+
+.home__search {
+  text-align: center;
+  margin-top: 1.5rem;
+}

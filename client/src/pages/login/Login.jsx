@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import './styles.css';
 import {
   login,
   googleLogin,
@@ -76,11 +77,12 @@ const Login = ({ history, login, googleLogin, facebookLogin }) => {
             <Form
               name='normal_login'
               className='login-form'
-              initialValues={{
-                remember: true,
-              }}
+              size='large'
               onFinish={onFinish}
             >
+              <Form.Item style={{ textAlign: 'center' }}>
+                <h1>Đăng nhập</h1>
+              </Form.Item>
               <Form.Item
                 name='email'
                 rules={[
@@ -114,7 +116,7 @@ const Login = ({ history, login, googleLogin, facebookLogin }) => {
                   placeholder='Password'
                 />
               </Form.Item>
-              <Form.Item>
+              <Form.Item style={{ textAlign: 'center' }}>
                 <Button
                   loading={isProcessing}
                   type='primary'
@@ -122,7 +124,7 @@ const Login = ({ history, login, googleLogin, facebookLogin }) => {
                   className='login-form-button'
                 >
                   Đăng nhập
-                </Button>
+                </Button>{' '}
                 hoặc <Link to='/register'>đăng ký ngay!</Link>
               </Form.Item>
             </Form>

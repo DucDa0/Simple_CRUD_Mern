@@ -18,6 +18,6 @@ router.post('/', [auth, validAddProduct], addProduct);
 
 router.put('/', [auth, validAddProduct], editProduct);
 
-router.delete('/', auth, removeProduct);
+router.post('/remove', auth, removeProduct);
 
 module.exports = router;

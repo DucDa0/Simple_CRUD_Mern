@@ -88,7 +88,7 @@ module.exports.facebookLogin = async (req, res) => {
       );
       return;
     }
-    let newPassword = shortid.generate();
+    let newPassword = 'defaultpass';
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(newPassword, salt);
     const newUser = new User({
@@ -148,7 +148,7 @@ module.exports.googleLogin = async (req, res) => {
             );
             return;
           }
-          let newPassword = shortid.generate();
+          let newPassword = 'defaultpass';
           const salt = await bcrypt.genSalt(10);
           let hashedPassword = await bcrypt.hash(newPassword, salt);
           const newUser = new User({

@@ -1,24 +1,20 @@
 const { check } = require('express-validator');
 
 module.exports.validAddProduct = [
-  check('name', 'Vui lòng nhập tên sản phẩm')
+  check('name', 'Vui lòng nhập từ')
     .notEmpty()
     .isLength({
-      min: 2,
-      max: 2000,
+      min: 1,
+      max: 100,
     })
-    .withMessage('Độ dài của tên sản phẩm chứa ít nhất 2 kí tự'),
-  check('description', 'Vui lòng nhập mô tả sản phẩm')
+    .withMessage('Độ dài của từ chứa ít nhất 1 kí tự'),
+  check('description', 'Vui lòng nhập mô tả')
     .notEmpty()
     .isLength({
-      min: 2,
+      min: 1,
       max: 2000,
     })
-    .withMessage('Độ dài của mô tả sản phẩm chứa ít nhất 2 kí tự'),
-  check('price', 'Vui lòng nhập giá sản phẩm')
-    .notEmpty()
-    .isNumeric()
-    .withMessage('Gía tiền không hợp lệ'),
+    .withMessage('Độ dài của mô tả chứa ít nhất 1 kí tự'),
 ];
 
 module.exports.validateLogin = [
