@@ -128,7 +128,17 @@ const Home = ({ products, getAllProducts, auth: { user } }) => {
                     ]}
                     title={p.name}
                     hoverable
-                    cover={<img height='200' alt='example' src={p.image} />}
+                    cover={
+                      <img
+                        style={{
+                          objectFit: 'cover',
+                          height: 200,
+                          width: '100%',
+                        }}
+                        alt='example'
+                        src={p.image}
+                      />
+                    }
                   >
                     <p className='home__desc'>{p.description}</p>
                   </Card>
