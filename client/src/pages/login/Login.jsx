@@ -68,7 +68,9 @@ const Login = ({ history, login, googleLogin, facebookLogin }) => {
   const responseFacebook = (response) => {
     facebookLoginHandle(response.userID, response.accessToken);
   };
-
+  if (localStorage.token) {
+    return history.push('/');
+  }
   return (
     <section className='login'>
       <div className='login__wrap container'>
