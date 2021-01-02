@@ -50,7 +50,7 @@ module.exports.Login = async (req, res) => {
     jwt.sign(
       payload,
       config.get('JWT_LOGIN'),
-      { expiresIn: '14d' },
+      { expiresIn: '3m' },
       (err, token) => {
         if (err) throw err;
         return res.json({ token });
@@ -80,7 +80,7 @@ module.exports.facebookLogin = async (req, res) => {
       jwt.sign(
         payload,
         config.get('JWT_LOGIN'),
-        { expiresIn: '14d' },
+        { expiresIn: '3m' },
         (err, token) => {
           if (err) throw err;
           return res.json({ token });
@@ -105,7 +105,7 @@ module.exports.facebookLogin = async (req, res) => {
     jwt.sign(
       payload,
       config.get('JWT_LOGIN'),
-      { expiresIn: '14d' },
+      { expiresIn: '3m' },
       (err, token) => {
         if (err) throw err;
         return res.json({ token });
@@ -140,7 +140,7 @@ module.exports.googleLogin = async (req, res) => {
             jwt.sign(
               payload,
               config.get('JWT_LOGIN'),
-              { expiresIn: '14d' },
+              { expiresIn: '3m' },
               (err, token) => {
                 if (err) throw err;
                 return res.json({ token });
@@ -165,7 +165,7 @@ module.exports.googleLogin = async (req, res) => {
           jwt.sign(
             payload,
             config.get('JWT_LOGIN'),
-            { expiresIn: '7d' },
+            { expiresIn: '3m' },
             (err, token) => {
               if (err) throw err;
               return res.json({ token });
