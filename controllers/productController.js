@@ -1,5 +1,13 @@
 const { validationResult } = require('express-validator');
+const config = require('config');
 const Product = require('../models/Product');
+
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: config.get('CLOUD_NAME'),
+  api_key: config.get('API_KEY_IMAGE'),
+  api_secret: config.get('API_SECRET'),
+});
 
 module.exports.getProducts = async (req, res) => {
   try {
@@ -15,14 +23,19 @@ module.exports.addProduct = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, description } = req.body;
+  const { name, description, content } = req.body;
   try {
     const product = new Product({
       userId: req.user.id,
       name,
       description,
+      content,
     });
-    product.image = `https://picsum.photos/200/200?random=${product._id}`;
+    // const imageUrl = await cloudinary.uploader.upload(req.file.path);
+    // if (imageUrl) {
+    //   product.image = imageUrl.url;
+    // }
+    product.image = req.body.url;
     await product.save((err, data) => {
       if (!err) {
         return res.json({ message: 'Thêm thành công!', product });

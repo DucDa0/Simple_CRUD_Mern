@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { AddProduct, EditProduct } from '../../redux/actions/productAction';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 const FormModal = ({
   visible,
   setVisible,
@@ -12,6 +15,7 @@ const FormModal = ({
   EditProduct,
 }) => {
   const [form] = Form.useForm();
+  const [content, setContent] = useState('');
   const [confirmLoading, setConfirmLoading] = useState(false);
   useEffect(() => {
     if (edit) {
@@ -30,7 +34,7 @@ const FormModal = ({
       return;
     }
     setConfirmLoading(true);
-    const res = await AddProduct({ name, description });
+    const res = await AddProduct({ name, description, content });
     setConfirmLoading(false);
     if (res) {
       setVisible(false);
@@ -38,6 +42,11 @@ const FormModal = ({
   };
   const handleCancel = () => {
     setVisible(false);
+  };
+
+  const handleCkeditor = (event, editor) => {
+    let data = editor.getData();
+    setContent(data);
   };
   return (
     <Modal
@@ -51,6 +60,7 @@ const FormModal = ({
       footer={false}
     >
       <Form
+        encType='multipart/form-data'
         form={form}
         size='large'
         layout='vertical'
@@ -83,6 +93,20 @@ const FormModal = ({
           label='Mô tả'
         >
           <Input.TextArea />
+        </Form.Item>
+        <Form.Item>
+          <input type='file' name='productImg' />
+        </Form.Item>
+        <Form.Item>
+          <CKEditor
+            config={{
+              ckfinder: {
+                uploadUrl: '/upload',
+              },
+            }}
+            editor={ClassicEditor}
+            onChange={handleCkeditor}
+          />
         </Form.Item>
         <Form.Item style={{ textAlign: 'right' }}>
           <Button
