@@ -29,6 +29,16 @@ app.post('/upload', MultipartyMiddleware, async (req, res) => {
   }
 });
 
+app.post('/uploadProduct', MultipartyMiddleware, async (req, res) => {
+  let tmpFile = req.files.file;
+  let pathFile = tmpFile.path;
+  const imageUrl = await cloudinary.uploader.upload(pathFile);
+  return res.status(200).json({
+    uploaded: true,
+    url: imageUrl.url,
+  });
+});
+
 connectToDB();
 
 route(app);

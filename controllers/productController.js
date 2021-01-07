@@ -23,19 +23,15 @@ module.exports.addProduct = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, description, content } = req.body;
+  const { name, description, content, image } = req.body;
   try {
     const product = new Product({
       userId: req.user.id,
       name,
       description,
       content,
+      image,
     });
-    // const imageUrl = await cloudinary.uploader.upload(req.file.path);
-    // if (imageUrl) {
-    //   product.image = imageUrl.url;
-    // }
-    product.image = req.body.url;
     await product.save((err, data) => {
       if (!err) {
         return res.json({ message: 'Thêm thành công!', product });
@@ -50,7 +46,7 @@ module.exports.editProduct = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, description, id } = req.body;
+  const { name, description, image, id } = req.body;
   try {
     const product = await Product.findById(id);
     if (!product) {
@@ -60,6 +56,7 @@ module.exports.editProduct = async (req, res) => {
     }
     product.name = name;
     product.description = description;
+    product.image = image;
     await product.save((err, data) => {
       if (!err) {
         return res.json({ message: 'Sửa thành công!', product });

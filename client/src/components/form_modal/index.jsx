@@ -1,11 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Form, Input, Upload, message } from 'antd';
 import { connect } from 'react-redux';
 import { AddProduct, EditProduct } from '../../redux/actions/productAction';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import { PlusOutlined } from '@ant-design/icons';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+
+const uploadButton = (
+  <div>
+    <PlusOutlined />
+    <div style={{ marginTop: 8 }}>Upload</div>
+  </div>
+);
 const FormModal = ({
   visible,
   setVisible,
@@ -15,18 +22,34 @@ const FormModal = ({
   EditProduct,
 }) => {
   const [form] = Form.useForm();
-  const [content, setContent] = useState('');
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [fileList, setFileList] = useState([]);
   useEffect(() => {
     if (edit) {
       form.resetFields();
+      setFileList(
+        item.image.map((img, index) => ({
+          uid: index,
+          thumbUrl: img,
+          response: { url: img },
+        }))
+      );
     }
   }, [item]);
   const onFinish = async (values) => {
     const { name, description } = values;
+    if (fileList.length <= 0) {
+      return message.error('Vui long chon hinh anh');
+    }
     if (edit) {
       setConfirmLoading(true);
-      const res = await EditProduct({ id: item._id, name, description });
+
+      const res = await EditProduct({
+        id: item._id,
+        name,
+        description,
+        image: fileList.map((img) => img.response.url),
+      });
       setConfirmLoading(false);
       if (res) {
         setVisible(false);
@@ -34,7 +57,11 @@ const FormModal = ({
       return;
     }
     setConfirmLoading(true);
-    const res = await AddProduct({ name, description, content });
+    const res = await AddProduct({
+      name,
+      description,
+      image: fileList.map((img) => img.response.url),
+    });
     setConfirmLoading(false);
     if (res) {
       setVisible(false);
@@ -44,10 +71,15 @@ const FormModal = ({
     setVisible(false);
   };
 
-  const handleCkeditor = (event, editor) => {
-    let data = editor.getData();
-    setContent(data);
+  const handleChange = ({ fileList }) => {
+    console.log(fileList);
+    setFileList(fileList);
   };
+  // const handleCkeditor = (event, editor) => {
+  //   let data = editor.getData();
+  //   setContent(data);
+  // };
+  console.log(fileList);
   return (
     <Modal
       maskClosable={!confirmLoading}
@@ -95,9 +127,16 @@ const FormModal = ({
           <Input.TextArea />
         </Form.Item>
         <Form.Item>
-          <input type='file' name='productImg' />
+          <Upload
+            action='/uploadProduct'
+            listType='picture-card'
+            fileList={fileList}
+            onChange={handleChange}
+          >
+            {fileList.length >= 8 ? null : uploadButton}
+          </Upload>
         </Form.Item>
-        <Form.Item>
+        {/* <Form.Item>
           <CKEditor
             config={{
               ckfinder: {
@@ -107,7 +146,7 @@ const FormModal = ({
             editor={ClassicEditor}
             onChange={handleCkeditor}
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item style={{ textAlign: 'right' }}>
           <Button
             style={{ marginRight: '1rem' }}
