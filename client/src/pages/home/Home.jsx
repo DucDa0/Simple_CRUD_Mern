@@ -53,7 +53,6 @@ const Home = ({ products, getAllProducts, auth: { user } }) => {
       setSearchResults(data);
     }
   };
-  console.log('render');
   return (
     <section className='home'>
       <div className='home__wrap container'>
@@ -131,12 +130,12 @@ const Home = ({ products, getAllProducts, auth: { user } }) => {
                     cover={
                       <img
                         style={{
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           height: 200,
-                          width: '100%',
+                          maxWidth: '100%',
                         }}
                         alt='example'
-                        src={p.image}
+                        src={p.image[0]}
                       />
                     }
                   >

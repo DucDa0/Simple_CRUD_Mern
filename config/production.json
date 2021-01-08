@@ -1,5 +1,8 @@
 {
   "MONGO_URI": "mongodb+srv://xuandat:xuandat123@cluster0.c5m69.mongodb.net/MernApp?retryWrites=true&w=majority",
   "GOOGLE_CLIENT": "600298462719-rip8u175f9il4si9j1r596035csuh5mb.apps.googleusercontent.com",
-  "JWT_LOGIN": "xuandatdangnhap"
+  "JWT_LOGIN": "xuandatdangnhap",
+  "CLOUD_NAME": "petstore-mern",
+  "API_KEY_IMAGE": "961355747379429",
+  "API_SECRET": "rGLBE9UbLRa4qpuVh6lKlJ2Z_u4"
 }
